@@ -10,7 +10,7 @@ $VERSION = "1.0";
         authors     => "Walt Mankowski",
         contact     => "waltman\@pobox.com",
         name        => "wcm_test",
-        description => "test how signals and suchlike work",
+        description => "log messages to a SQLite database",
         license     => "GPLv2",
         url         => "http://nchip.ukkosenjyly.mine.nu/irssiscripts/",
     );
