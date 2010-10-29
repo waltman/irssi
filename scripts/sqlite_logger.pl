@@ -61,7 +61,7 @@ sub cmd_own {
 }
 sub cmd_topic {
     my ($server, $target, $data, $nick, $mask) = @_;
-    return cmd_log($server, $data, $nick, $mask, $target);
+    return cmd_logmsg($server, $data, $nick, $mask, $target);
 }
 
 sub db_insert {
