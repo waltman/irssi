@@ -66,6 +66,22 @@ sub cmd_topic {
     return cmd_logmsg($server, $msg, $nick, $mask, $target);
 }
 
+sub cmd_join {
+    my ($server, $target, $nick, $mask) = @_;
+
+    my $msg = "join: $nick";
+    return cmd_logmsg($server, $msg, $nick, $mask, $target);
+}
+
+sub cmd_part {
+    my ($server, $target, $nick, $mask, $reason) = @_;
+
+    my $msg = "part: $nick [$reason]";
+    return cmd_logmsg($server, $msg, $nick, $mask, $target);
+}
+
+
+
 sub db_insert {
     my ($nick, $target, $line, $network)=@_;
 
@@ -98,6 +114,10 @@ sub get_id {
 Irssi::signal_add_last('message public', 'cmd_logmsg');
 Irssi::signal_add_last('message own_public', 'cmd_own');
 Irssi::signal_add_last('message topic', 'cmd_topic');
+Irssi::signal_add_last('message join', 'cmd_join');
+#Irssi::signal_add_last('message notice', 'cmd_notice');
+Irssi::signal_add_last('message part', 'cmd_part');
+#Irssi::signal_add_first('message quit', 'cmd_quit');
 
 Irssi::print("SQLite logger by waltman loaded.");
 
