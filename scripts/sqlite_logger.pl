@@ -96,6 +96,13 @@ sub cmd_part {
     return cmd_logmsg($server, $msg, $nick, $mask, $target);
 }
 
+sub cmd_quit {
+    my ($server, $nick, $mask, $reason) = @_;
+
+    my $msg = "quit: $nick [$reason]";
+    return cmd_logmsg($server, $msg, $nick, $mask, undef);
+}
+
 
 
 sub db_insert {
@@ -105,7 +112,11 @@ sub db_insert {
 
     my $network_id = get_id($network_check_sth, $network_insert_sth, $network);
     my $nick_id = get_id($nick_check_sth, $nick_insert_sth, $nick);
-    my $channel_id = get_id($channel_check_sth, $channel_insert_sth, $target);
+
+    my $channel_id;
+    if (defined $target) {
+        $channel_id = get_id($channel_check_sth, $channel_insert_sth, $target);
+    }
 
     $msg_insert_sth->execute($network_id, $nick_id, $channel_id, $line);
 
@@ -135,7 +146,7 @@ Irssi::signal_add_last('message topic', 'cmd_topic');
 Irssi::signal_add_last('message join', 'cmd_join');
 #Irssi::signal_add_last('message notice', 'cmd_notice');
 Irssi::signal_add_last('message part', 'cmd_part');
-#Irssi::signal_add_first('message quit', 'cmd_quit');
+Irssi::signal_add_first('message quit', 'cmd_quit');
 
 Irssi::print("SQLite logger by waltman loaded.");
 
