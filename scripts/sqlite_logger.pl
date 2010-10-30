@@ -55,10 +55,26 @@ sub cmd_logmsg {
     return 1;
 }
 
+sub cmd_action {
+    my ($server, $data, $nick, $mask, $target) = @_;
+
+    my $msg = "$nick $data";
+    db_insert($nick, $target, $msg, $server->{tag});
+    return 1;
+}
+
 sub cmd_own {
     my ($server, $data, $target) = @_;
     return cmd_logmsg($server, $data, $server->{nick}, "", $target);
 }
+
+sub cmd_own_action {
+    my ($server, $data, $target) = @_;
+
+    my $msg = "$server->{nick} $data";
+    return cmd_logmsg($server, $msg, $server->{nick}, "", $target);
+}
+
 sub cmd_topic {
     my ($server, $target, $data, $nick, $mask) = @_;
 
@@ -113,6 +129,8 @@ sub get_id {
 
 Irssi::signal_add_last('message public', 'cmd_logmsg');
 Irssi::signal_add_last('message own_public', 'cmd_own');
+Irssi::signal_add_last('message irc action', 'cmd_action');
+Irssi::signal_add_last('message irc own_action', 'cmd_own_action');
 Irssi::signal_add_last('message topic', 'cmd_topic');
 Irssi::signal_add_last('message join', 'cmd_join');
 #Irssi::signal_add_last('message notice', 'cmd_notice');
