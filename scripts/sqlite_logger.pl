@@ -61,7 +61,9 @@ sub cmd_own {
 }
 sub cmd_topic {
     my ($server, $target, $data, $nick, $mask) = @_;
-    return cmd_logmsg($server, $data, $nick, $mask, $target);
+
+    my $msg = "topic changed to '$data'";
+    return cmd_logmsg($server, $msg, $nick, $mask, $target);
 }
 
 sub db_insert {
