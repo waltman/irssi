@@ -126,10 +126,16 @@ sub db_insert {
 sub get_id {
     my ($check_sth, $insert_sth, $key) = @_;
 
+    # check if we've already added it
+    my ($id) = $dbh->selectrow_array($check_sth, undef, $key);
+    return $id if defined $id;
+
     # try to add the row
     $insert_sth->execute($key);
 
     # return the id
+    # note: I'm not using last_insert_id in case of a race condition
+    #       in the insert
     return $dbh->selectrow_array($check_sth, undef, $key);
 }
 
