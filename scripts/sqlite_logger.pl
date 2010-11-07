@@ -33,15 +33,15 @@ SELECT channel_id FROM channels WHERE channel = ?
 ');
 
 my $network_insert_sth = $dbh->prepare('
-INSERT INTO networks (network) VALUES (?)
+INSERT OR IGNORE INTO networks (network) VALUES (?)
 ');
 
 my $nick_insert_sth = $dbh->prepare('
-INSERT INTO nicks (nick) VALUES (?)
+INSERT OR IGNORE INTO nicks (nick) VALUES (?)
 ');
 
 my $channel_insert_sth = $dbh->prepare('
-INSERT INTO channels (channel) VALUES (?)
+INSERT OR IGNORE INTO channels (channel) VALUES (?)
 ');
 
 my $msg_insert_sth = $dbh->prepare('
@@ -126,16 +126,11 @@ sub db_insert {
 sub get_id {
     my ($check_sth, $insert_sth, $key) = @_;
 
-    # check if we've already added it
-    my ($id) = $dbh->selectrow_array($check_sth, undef, $key);
-
-    return $id if defined $id;
-
-    # add the row
+    # try to add the row
     $insert_sth->execute($key);
 
-    # return the auto-incremented id
-    return $dbh->last_insert_id(undef, undef, undef, undef);
+    # return the id
+    return $dbh->selectrow_array($check_sth, undef, $key);
 }
 
 Irssi::signal_add_last('message public', 'cmd_logmsg');
