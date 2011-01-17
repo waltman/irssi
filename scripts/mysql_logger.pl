@@ -34,20 +34,20 @@ SELECT channel_id FROM channels WHERE channel = ?
 ');
 
 my $network_insert_sth = $dbh->prepare('
-INSERT IGNORE INTO networks (network) VALUES (?)
+INSERT IGNORE INTO networks (network, time_added) VALUES (?, NOW())
 ');
 
 my $nick_insert_sth = $dbh->prepare('
-INSERT IGNORE INTO nicks (nick) VALUES (?)
+INSERT IGNORE INTO nicks (nick, time_added) VALUES (?, NOW())
 ');
 
 my $channel_insert_sth = $dbh->prepare('
-INSERT IGNORE INTO channels (channel) VALUES (?)
+INSERT IGNORE INTO channels (channel, time_added) VALUES (?, NOW())
 ');
 
 my $msg_insert_sth = $dbh->prepare('
-INSERT INTO messages (network_id, nick_id, channel_id, message)
-              VALUES (?,          ?,       ?,          ?)
+INSERT INTO messages (network_id, nick_id, channel_id, message, time_added)
+              VALUES (?,          ?,       ?,          ?,       NOW())
 ');
 
 sub cmd_logmsg {
