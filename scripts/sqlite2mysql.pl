@@ -31,7 +31,7 @@ sub copy_networks {
     say "Copying networks...";
 
     my $in_sth = $dbh_sq->prepare('
-SELECT network_id, network, time_added
+SELECT network_id, network, datetime(time_added, "localtime")
 FROM networks
 ');
 
@@ -49,7 +49,7 @@ sub copy_channels {
     say "Copying channels...";
 
     my $in_sth = $dbh_sq->prepare('
-SELECT channel_id, channel, time_added
+SELECT channel_id, channel, datetime(time_added, "localtime")
 FROM channels
 ');
 
@@ -67,7 +67,7 @@ sub copy_nicks {
     say "Copying nicks...";
 
     my $in_sth = $dbh_sq->prepare('
-SELECT nick_id, nick, time_added
+SELECT nick_id, nick, datetime(time_added, "localtime")
 FROM nicks
 ');
 
@@ -85,7 +85,7 @@ sub copy_messages {
     say "Copying messages...";
 
     my $in_sth = $dbh_sq->prepare('
-SELECT message_id, network_id, channel_id, nick_id, message, time_added
+SELECT message_id, network_id, channel_id, nick_id, message, datetime(time_added, "localtime")
 FROM messages
 ');
 
