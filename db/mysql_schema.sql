@@ -1,3 +1,6 @@
+drop database if exists irc;
+create database irc character set 'utf8' collate 'utf8_bin';
+
 use irc;
 
 start transaction;
