@@ -33,9 +33,9 @@ drop table if exists messages;
 
 create table messages (
        message_id integer unsigned not null primary key auto_increment,
-       network_id integer not null unsigned,
+       network_id integer unsigned not null,
        channel_id integer unsigned,
-       nick_id integer not null unsigned,
+       nick_id integer unsigned not null,
        message varchar(4096) not null,
        time_added datetime NOT NULL DEFAULT NOW(),
        foreign key (network_id) references networks(network_id) on delete cascade,
