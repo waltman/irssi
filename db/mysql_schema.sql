@@ -10,7 +10,7 @@ drop table if exists networks;
 create table networks (
        network_id integer unsigned not null primary key auto_increment,
        network varchar(32) not null unique,
-       time_added datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+       time_added datetime NOT NULL DEFAULT NOW()
 ) engine = innodb;
 
 drop table if exists nicks;
