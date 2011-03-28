@@ -155,7 +155,7 @@ Irssi::signal_add_last('message join', 'cmd_join');
 #Irssi::signal_add_last('message notice', 'cmd_notice');
 Irssi::signal_add_last('message part', 'cmd_part');
 Irssi::signal_add_first('message quit', 'cmd_quit');
-Irssi::signal_add_first('message kick', 'cmd_kick');
+Irssi::signal_add_last('message kick', 'cmd_kick');
 
 Irssi::print("SQLite logger by waltman loaded.");
 
