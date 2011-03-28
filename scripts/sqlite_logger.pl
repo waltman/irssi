@@ -103,6 +103,12 @@ sub cmd_quit {
     return cmd_logmsg($server, $msg, $nick, $mask, undef);
 }
 
+sub cmd_kick {
+    my ($server, $target, $nick, $knick, $mask, $reason) = @_;
+
+    my $msg = "kick: $nick by $knick [$reason]";
+    return cmd_logmsg($server, $msg, $nick, $mask, $target);
+}
 
 
 sub db_insert {
@@ -148,6 +154,7 @@ Irssi::signal_add_last('message join', 'cmd_join');
 #Irssi::signal_add_last('message notice', 'cmd_notice');
 Irssi::signal_add_last('message part', 'cmd_part');
 Irssi::signal_add_first('message quit', 'cmd_quit');
+Irssi::signal_add_last('message kick', 'cmd_kick');
 
 Irssi::print("SQLite logger by waltman loaded.");
 
