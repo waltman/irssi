@@ -40,7 +40,8 @@ create table messages (
        time_added datetime NOT NULL,
        foreign key (network_id) references networks(network_id) on delete cascade,
        foreign key (channel_id) references channels(channel_id) on delete cascade,
-       foreign key (nick_id) references nicks(nick_id) on delete cascade
+       foreign key (nick_id) references nicks(nick_id) on delete cascade,
+       index (message)
 ) engine = innodb;
 
 commit;
